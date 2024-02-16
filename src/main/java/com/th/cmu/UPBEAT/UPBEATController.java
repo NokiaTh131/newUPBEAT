@@ -1,0 +1,47 @@
+package com.th.cmu.UPBEAT;
+
+import com.th.cmu.UPBEAT.landm.LandService;
+import com.th.cmu.UPBEAT.player.PlayerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+
+@CrossOrigin
+@RestController
+public class UPBEATController {
+    @Autowired
+    private PlayerService playerservice;
+    @Autowired
+    private LandService landservice;
+
+    @PostMapping("/player")
+    public Player createPlayer(@RequestBody String body) throws IOException {//create player in server
+        return this.playerservice.createNewPlayer(body);
+    }
+
+    @GetMapping("/player/{name}")
+    public ResponseEntity<Player> getPlayer(@PathVariable("name") String name) {
+        return this.playerservice.getPlayerInfo(name);
+    }
+
+    @PutMapping("/player/{name}/constructionplan")
+    public ResponseEntity<Player> editConstructionplan(@PathVariable("name") String name, @RequestBody String body) {
+        return this.playerservice.editConstruct(name, body);
+    }
+    @GetMapping("/land")
+    public ResponseEntity<land> getLand() throws IOException {
+        return this.landservice.getLandInfo(playerservice.getPlayersforland());
+    }
+    @PostMapping("/land")
+    public land createLand() throws IOException {//create player in server
+        return this.landservice.createNewLand(playerservice.getPlayersforland());
+    }
+
+    @PostMapping("/player/{name}/parse")
+    public void invokeParse(@PathVariable("name") String name) throws Parser.SyntaxError, EvalError, IOException {
+        this.landservice.parse(playerservice.getPlayerInfo(name),playerservice.getPlayersforland());
+    }
+
+}

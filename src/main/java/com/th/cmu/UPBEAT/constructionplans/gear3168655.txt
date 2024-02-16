@@ -1,0 +1,6 @@
+move down
+invest 1
+move down
+invest 1
+move down
+invest 1
