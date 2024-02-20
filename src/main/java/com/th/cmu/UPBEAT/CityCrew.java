@@ -41,7 +41,9 @@ public class CityCrew {
             return;
         }
 
+        if(getCurrentCol() % 2 == 0){
             p.bindings.put("curcol",p.bindings.get("curcol") + 1);
+        }
 
     }
 

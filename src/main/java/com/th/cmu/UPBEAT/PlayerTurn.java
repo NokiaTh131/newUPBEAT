@@ -132,7 +132,8 @@ public class PlayerTurn {
         ConstructionPlanReader constructionPlanReader = new ConstructionPlanReader();
         String constructionPlan = constructionPlanReader.read(constructfile);
 
-        ExprTokenizer tokenizer = new ExprTokenizer(constructionPlan);
+        ExprTokenizer tokenizer = new ExprTokenizer("t = t + 1 " + constructionPlan);
+
         ExprParser parser = new ExprParser(tokenizer,l,player);
         List<Expr> result = parser.parsePlan();
         try {

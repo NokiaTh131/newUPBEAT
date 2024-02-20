@@ -65,6 +65,7 @@ class ActionCommands implements ActionCmd {
                         return true;}
                     break;
                 case UPRIGHT:
+
                     if((p.getCityCrew().getCurrentRow() == 0 && p.getCityCrew().getCurrentCol() % 2 == 1) || p.getCityCrew().getCurrentCol() == p.bindings.get("cols") - 1) return false;
                     p.getCityCrew().moveUpRight();
                     if(p.getCityCrew().getPlayer_Id() != w.getCell(p.getCityCrew().getCurrentRow(),p.getCityCrew().getCurrentCol()).getPlayer_Id()
@@ -73,7 +74,8 @@ class ActionCommands implements ActionCmd {
                         return true;}
                     break;
                 case DOWNRIGHT:
-                    if((p.getCityCrew().getCurrentRow() == p.bindings.get("rows") - 1 && p.getCityCrew().getCurrentCol() % 2 == 1) || p.getCityCrew().getCurrentCol() == p.bindings.get("cols") - 1) return false;
+                    System.out.println("downnnnnn right");
+                    if((p.getCityCrew().getCurrentRow() == p.bindings.get("rows") - 1 && p.getCityCrew().getCurrentCol() % 2 == 0) || p.getCityCrew().getCurrentCol() == p.bindings.get("cols") - 1) return false;
                     p.getCityCrew().moveDownRight();
                     if(p.getCityCrew().getPlayer_Id() != w.getCell(p.getCityCrew().getCurrentRow(),p.getCityCrew().getCurrentCol()).getPlayer_Id()
                             && w.getCell(p.getCityCrew().getCurrentRow(),p.getCityCrew().getCurrentCol()).getPlayer_Id() != 0) {
@@ -89,7 +91,11 @@ class ActionCommands implements ActionCmd {
                         return true;}
                     break;
                 case DOWNLEFT:
-                    if((p.getCityCrew().getCurrentRow() == p.bindings.get("rows") - 1 && p.getCityCrew().getCurrentCol() % 2 == 1) || p.getCityCrew().getCurrentCol() == 0) return false;
+                    System.out.println("downnnnnn lefttttt");
+                    if((p.getCityCrew().getCurrentRow() == p.bindings.get("rows") - 1 && p.getCityCrew().getCurrentCol() % 2 == 0) || p.getCityCrew().getCurrentCol() == 0) {
+                        System.out.println("downnnnnn lefttttt rejecttt");
+                        return false;
+                    }
                     p.getCityCrew().moveDownLeft();
                     if(p.getCityCrew().getPlayer_Id() != w.getCell(p.getCityCrew().getCurrentRow(),p.getCityCrew().getCurrentCol()).getPlayer_Id()
                             && w.getCell(p.getCityCrew().getCurrentRow(),p.getCityCrew().getCurrentCol()).getPlayer_Id() != 0) {
@@ -213,7 +219,7 @@ class ActionCommands implements ActionCmd {
             case UPRIGHT:
                 if((loc[1] < c.n()-1)) {
                     if (loc[1] % 2 == 1) {
-                        if(loc[0] >= 0) {
+                        if(loc[0] > 0) {
                             loc[0]--;
                             loc[1]++;
                         }

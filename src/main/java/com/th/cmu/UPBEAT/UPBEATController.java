@@ -40,7 +40,7 @@ public class UPBEATController {
     }
 
     @PostMapping("/player/{name}/parse")
-    public void invokeParse(@PathVariable("name") String name) throws Parser.SyntaxError, EvalError, IOException {
+    public void invokeParse(@PathVariable("name") String name) throws Parser.SyntaxError, EvalError, IOException, ActionCmd.ParsingInterruptedException {
         this.landservice.parse(playerservice.getPlayerInfo(name),playerservice.getPlayersforland());
     }
 

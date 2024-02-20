@@ -40,7 +40,7 @@ public class LandRepository implements LandService{
     }
 
     @Override
-    public void parse(ResponseEntity<Player> playerInfo, List<Player> players) throws Parser.SyntaxError, EvalError, IOException {
+    public void parse(ResponseEntity<Player> playerInfo, List<Player> players) throws Parser.SyntaxError, EvalError, IOException, ActionCmd.ParsingInterruptedException {
         PlayerTurn pt = new PlayerTurn();
         pt.executePlayerTurn(playerInfo.getBody(),lands.get(players), Objects.requireNonNull(playerInfo.getBody()).filePath);
     }

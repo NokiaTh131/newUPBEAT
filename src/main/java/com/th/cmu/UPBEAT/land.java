@@ -10,11 +10,19 @@ public class land implements Territory {
     public WeightedGraph map;
     public List<Player> players;
     private Set<String> selectedPlaces = new HashSet<>();
+    public int plan_rev_min = 0;
+    public int plan_rev_sec= 0;
+    public int init_plan_min = 0;
+    public int init_plan_sec = 0;
 
     public land(List<Player> players) throws IOException {
         c = new ConfigurationReader();
         this.map = new WeightedGraph(c.m(), c.n());
         this.players = players;
+        plan_rev_min = (int)c.planRevMin();
+        plan_rev_sec= (int) c.planRevSec();
+        init_plan_min = (int) c.initPlanMin();
+        init_plan_sec = (int) c.initPlanSec();
     }
 
     //spec : buycity is invoked only first time game is started for set player initial random cell

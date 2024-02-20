@@ -1,9 +1,6 @@
 package com.th.cmu.UPBEAT.landm;
 
-import com.th.cmu.UPBEAT.EvalError;
-import com.th.cmu.UPBEAT.Parser;
-import com.th.cmu.UPBEAT.Player;
-import com.th.cmu.UPBEAT.land;
+import com.th.cmu.UPBEAT.*;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
@@ -14,5 +11,5 @@ public interface LandService {
 
     ResponseEntity<land> getLandInfo(List<Player> playersforland) throws IOException;
 
-    void parse(ResponseEntity<Player> playerInfo, List<Player> players) throws Parser.SyntaxError, EvalError, IOException;
+    void parse(ResponseEntity<Player> playerInfo, List<Player> players) throws Parser.SyntaxError, EvalError, IOException, ActionCmd.ParsingInterruptedException;
 }
