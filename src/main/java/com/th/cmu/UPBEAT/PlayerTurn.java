@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.*;
@@ -13,6 +14,7 @@ public class PlayerTurn {
     static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public static void main(String[] args) throws IOException, Parser.SyntaxError, EvalError {
+        PlayerTurn pt = new PlayerTurn();
         // Assume p1 and p2 are your Player instances
         List<Player> players = new ArrayList<>();
         Player p1 = new Player("John",1);
@@ -24,21 +26,48 @@ public class PlayerTurn {
         l.buyCity(p2);
         l.buyCity(p3);
         l.printMatrix();
-        int currentIndex = 0;
 
-        while (players.size() > 1) {
-            for (Player player: players) {
-                l.printOwner(players.get(currentIndex));
-//                askPlayerForConstructionPlan(player,l);
+        List<Player> playersIngame = new ArrayList<>(players);
+        Iterator<Player> itr;
+
+        while (playersIngame.size() > 1) {
+            itr = playersIngame.iterator();
+            while (itr.hasNext()) {
+                Player p = itr.next();
+                if (!p.isDead) {
+                    pt.askPlayerForConstructionPlan(p, l);
+                } else {
+                    System.out.println(p.getName() + " is dead GG.");
+                    itr.remove(); // Remove dead player from the list
+                }
                 l.printMatrix();
-                l.printOwner(new Player());
             }
         }
         System.out.println("winner is " + players.getFirst().getName());
-
         // Shut down the executor service when done
         executorService.shutdown();
     }
+
+    public void TurnRun(List<Player> players,PlayerTurn pt,land l) throws Parser.SyntaxError, EvalError, IOException {
+        List<Player> playersIngame = new ArrayList<>(players);
+        Iterator<Player> itr;
+        while (playersIngame.size() > 1) {
+            itr = playersIngame.iterator();
+            while (itr.hasNext()) {
+                Player p = itr.next();
+                if (!p.isDead) {
+                    pt.askPlayerForConstructionPlan(p, l);
+                } else {
+                    System.out.println(p.getName() + " is dead GG.");
+                    itr.remove(); // Remove dead player from the list
+                }
+                l.printMatrix();
+            }
+        }
+    }
+
+
+
 
     public void askPlayerForConstructionPlan(Player player, land l) throws Parser.SyntaxError, EvalError, IOException {
         ConfigurationReader c = new ConfigurationReader();
@@ -72,8 +101,6 @@ public class PlayerTurn {
 
 
 
-
-
     private static boolean isFileModified(String filename) throws IOException, InterruptedException {
         ConstructionPlanReader c = new ConstructionPlanReader();
         ConfigurationReader cf = new ConfigurationReader();
@@ -99,11 +126,6 @@ public class PlayerTurn {
 
 
 
-
-
-
-
-
     private static void openConstructionPlanFile(String filename) {
         try {
             // Replace "constructionplan.txt" with the actual path to your construction plan file
@@ -118,13 +140,6 @@ public class PlayerTurn {
             System.out.println("An error occurred while opening the construction plan file.");
         }
     }
-
-
-
-
-
-
-
 
 
 

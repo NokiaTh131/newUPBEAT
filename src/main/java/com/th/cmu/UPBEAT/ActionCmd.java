@@ -285,6 +285,7 @@ class ActionCommands implements ActionCmd {
         System.out.println(target.getP().getName() + " has lost the game!");
         Player lp = target.getP();
 //        l.players.remove(target.getP());
+        target.getP().setDead(true);
         target.setCitycenter(false);
         for(int i = 0;i < l.map.row;i++) {
             for(int j = 0;j < l.map.col;j++) {

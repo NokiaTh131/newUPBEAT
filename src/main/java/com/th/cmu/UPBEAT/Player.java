@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
+    protected boolean isDead;
     private String name;
     private int id;
     private int citycenRow = -1;
@@ -21,6 +22,7 @@ public class Player {
         bindings.put("cols", (int)r.n());
         this.name = name;
         this.id = id;
+        this.isDead = false;
         bindings.put("budget",(int) r.initBudget());
         this.cityCrew = new CityCrew(this);
         bindings.put("t", 0);
@@ -103,5 +105,8 @@ public class Player {
         }
     }
 
+    public void setDead(boolean dead) {
+        isDead = dead;
+    }
 }
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 public class GameController {
 
     @MessageMapping("/menu.addUser")
-    @SendTo("/topic/menupublic")
+    @SendTo("/topic/mainmenupublic")
     public ChatMessage addUser(ChatMessage message, SimpMessageHeaderAccessor headerAccessor) {
         headerAccessor.getSessionAttributes().put("username", message.getSender());
         return message;
@@ -20,5 +20,4 @@ public class GameController {
     public ChatMessage sendSignal(ChatMessage message) {
         return message;
     }
-
 }
