@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Player {
-    protected boolean isDead;
+    public boolean isDead;
     private String name;
     private int id;
     private int citycenRow = -1;

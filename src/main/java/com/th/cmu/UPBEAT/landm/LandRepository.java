@@ -1,6 +1,7 @@
 package com.th.cmu.UPBEAT.landm;
 
 import com.th.cmu.UPBEAT.*;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,7 @@ import java.util.Objects;
 public class LandRepository implements LandService{
 
     public Map<List<Player>, land> lands = new HashMap<>();
+
 
     @Override
     public land createNewLand(List<Player> players) throws IOException {

@@ -1,2 +1,2 @@
-move up
-invest 1
+move downleft
+invest 10

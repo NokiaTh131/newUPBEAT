@@ -48,7 +48,7 @@ public class PlayerTurn {
         executorService.shutdown();
     }
 
-    public void TurnRun(List<Player> players,PlayerTurn pt,land l) throws Parser.SyntaxError, EvalError, IOException {
+    public static void TurnRun(List<Player> players,PlayerTurn pt,land l) throws Parser.SyntaxError, EvalError, IOException {
         List<Player> playersIngame = new ArrayList<>(players);
         Iterator<Player> itr;
         while (playersIngame.size() > 1) {
