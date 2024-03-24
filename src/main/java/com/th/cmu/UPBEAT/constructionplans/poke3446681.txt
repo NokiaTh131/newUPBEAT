@@ -1,8 +1,0 @@
-move down
-invest 50
-move down
-invest 50
-move down
-invest 50
-move downleft
-invest 50

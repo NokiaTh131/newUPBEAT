@@ -1,4 +1,3 @@
-t = t + 1  # keeping track of the turn number
 m = 0  # number of random moves
 while (deposit) { # still our region
   if (deposit - 100)

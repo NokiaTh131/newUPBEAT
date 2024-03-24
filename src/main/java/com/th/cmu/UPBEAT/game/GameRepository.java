@@ -7,6 +7,7 @@ import com.th.cmu.UPBEAT.WebSocket.chat.GameController;
 import com.th.cmu.UPBEAT.WebSocket.chat.MessageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.json.GsonBuilderUtils;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
@@ -38,7 +39,7 @@ public class GameRepository implements GameService{
         while (playersReady.get() < totalPlayers) {
             // Wait until all players send their messages
             try {
-                Thread.sleep(1000); // You can adjust the sleep time as needed
+                Thread.sleep(100); // You can adjust the sleep time as needed
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 throw new RuntimeException("Interrupted while waiting for players to be ready", e);
@@ -59,6 +60,7 @@ public class GameRepository implements GameService{
     }
 
     public synchronized void TurnRun(List<Player> players, land l) throws Parser.SyntaxError, EvalError, IOException {
+        System.out.println("process turn run");
         List<Player> playersIngame = new ArrayList<>(players);
         Iterator<Player> itr;
         while (playersIngame.size() > 1) {
@@ -66,17 +68,20 @@ public class GameRepository implements GameService{
             while (itr.hasNext()) {
                 Player p = itr.next();
                 int tmp = p.bindings.get("t");
-                System.out.println(p.getName());
+
+                String username = p.getName();
+                var chatMessage = ChatMessage.builder().sender(username).content(username).type(MessageType.CHAT).build();
+                messagingTemplate.convertAndSend("/topic/menupublic",chatMessage);
+                System.out.println(chatMessage.getContent() + " turn");
                 if (!p.isDead) {
-                    String username = p.getName();
-                    var chatMessage = ChatMessage.builder().sender(username).content(username).type(MessageType.CHAT).build();
-                    messagingTemplate.convertAndSend("/topic/menupublic",chatMessage);
-                    System.out.println(chatMessage.getContent() + " turn");
-
                     while(tmp == p.bindings.get("t")) {
-
+                        try {
+                            Thread.sleep(100); // You can adjust the sleep time as needed
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                            throw new RuntimeException("Interrupted while waiting for players to be ready", e);
+                        }
                     }
-
                 } else {
                     System.out.println(p.getName() + " is dead GG.");
                     itr.remove(); // Remove dead player from the list
@@ -84,5 +89,8 @@ public class GameRepository implements GameService{
 
             }
         }
+        System.out.println("The winner is " + playersIngame.getFirst().getName());
+        var chatMessage = ChatMessage.builder().sender("GM").content("The Winner is " + playersIngame.getFirst().getName()).type(MessageType.CHAT).build();
+        messagingTemplate.convertAndSend("/topic/menupublic",chatMessage);
     }
 }

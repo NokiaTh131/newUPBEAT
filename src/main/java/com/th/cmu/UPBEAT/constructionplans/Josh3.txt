@@ -1,5 +1,0 @@
-move upleft
-invest 1
-move downleft
-invest 1
-shoot up 1000

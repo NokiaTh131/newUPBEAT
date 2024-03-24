@@ -13,61 +13,6 @@ public class PlayerTurn {
     private static final Scanner scanner = new Scanner(System.in);
     static final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public static void main(String[] args) throws IOException, Parser.SyntaxError, EvalError {
-        PlayerTurn pt = new PlayerTurn();
-        // Assume p1 and p2 are your Player instances
-        List<Player> players = new ArrayList<>();
-        Player p1 = new Player("John",1);
-        Player p2 = new Player("Jesse",2);
-        Player p3 = new Player("Josh",3);
-        players.add(p1);players.add(p2);players.add(p3);
-        land l = new land(players);
-        l.buyCity(p1);
-        l.buyCity(p2);
-        l.buyCity(p3);
-        l.printMatrix();
-
-        List<Player> playersIngame = new ArrayList<>(players);
-        Iterator<Player> itr;
-
-        while (playersIngame.size() > 1) {
-            itr = playersIngame.iterator();
-            while (itr.hasNext()) {
-                Player p = itr.next();
-                if (!p.isDead) {
-                    pt.askPlayerForConstructionPlan(p, l);
-                } else {
-                    System.out.println(p.getName() + " is dead GG.");
-                    itr.remove(); // Remove dead player from the list
-                }
-                l.printMatrix();
-            }
-        }
-        System.out.println("winner is " + players.getFirst().getName());
-        // Shut down the executor service when done
-        executorService.shutdown();
-    }
-
-    public static void TurnRun(List<Player> players,PlayerTurn pt,land l) throws Parser.SyntaxError, EvalError, IOException {
-        List<Player> playersIngame = new ArrayList<>(players);
-        Iterator<Player> itr;
-        while (playersIngame.size() > 1) {
-            itr = playersIngame.iterator();
-            while (itr.hasNext()) {
-                Player p = itr.next();
-                if (!p.isDead) {
-                    pt.askPlayerForConstructionPlan(p, l);
-                } else {
-                    System.out.println(p.getName() + " is dead GG.");
-                    itr.remove(); // Remove dead player from the list
-                }
-                l.printMatrix();
-            }
-        }
-    }
-
-
-
 
     public void askPlayerForConstructionPlan(Player player, land l) throws Parser.SyntaxError, EvalError, IOException {
         ConfigurationReader c = new ConfigurationReader();

@@ -1,4 +1,0 @@
-move up
-invest 10
-move up
-invest 10
